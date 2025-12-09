@@ -1,4 +1,4 @@
-const express =  require('express');
+const express = require("express")
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
@@ -20,6 +20,15 @@ const Usershema = new mongoose.Schema({
 const User = mongoose.model('User', Usershema);
 
 
+
+app.get("/allusers", async (req, res)=>{
+
+    const allusers = await  User.find()
+    res.json(allusers)
+
+
+})
+
 app.post("/create", async (req,res)=>{
     const {name, email, password} = req.body;
     const newUser = new User({
@@ -27,6 +36,7 @@ app.post("/create", async (req,res)=>{
         email,
         password
     });
+
     
     await newUser.save()
     res.json({message: "User created successfully from backend" });
